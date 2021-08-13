@@ -24,14 +24,14 @@ public class VaultService {
     public Employee create(Employee employee) {
         EmployeeModel employeeModel = EmployeeMapper.toModel(employee);
         EmployeeModel insertedEmployee = employeeRepository.save(employeeModel);
-        return EmployeeMapper.toDomain(insertedEmployee);
+        return EmployeeMapper.toDomain(insertedEmployee,false);
     }
 
     public Employee get(Long id) {
         EmployeeModel employeeModel;
         try {
             employeeModel = employeeRepository.getById(id);
-            return EmployeeMapper.toDomain(employeeModel);
+            return EmployeeMapper.toDomain(employeeModel, false);
         } catch (EntityNotFoundException e) {
             throw new RequestException("Employee not found", "not.found", HttpStatus.NOT_FOUND.value());
         }
@@ -39,7 +39,7 @@ public class VaultService {
 
     public List<Employee> findEmployees() {
         return employeeRepository.findAll()
-                .stream().map((EmployeeMapper::toDomain)) //map((employeeModel -> EmployeeMapper.toDomain(employeeModel)))
+                .stream().map((employeeModel -> EmployeeMapper.toDomain(employeeModel,true))) // map((EmployeeMapper::toDomain)) esta forma se puede utilizar con un solo parametro
                 .collect(Collectors.toList());
     }
 
@@ -57,7 +57,7 @@ public class VaultService {
         try {
             employeeModel = employeeRepository.getById(id);
             updateFields(employee,employeeModel);
-            return EmployeeMapper.toDomain(employeeRepository.save(employeeModel));
+            return EmployeeMapper.toDomain(employeeRepository.save(employeeModel), false);
         } catch (EntityNotFoundException e) {
             throw new RequestException("Employee not found", "not.found", HttpStatus.NOT_FOUND.value());
         }

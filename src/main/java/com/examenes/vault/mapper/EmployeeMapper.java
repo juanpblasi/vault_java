@@ -1,10 +1,8 @@
 package com.examenes.vault.mapper;
 
-import com.examenes.vault.dto.EmployeeDto;
 import com.examenes.vault.domain.Employee;
-import com.examenes.vault.repository.model.DepartmentModel;
+import com.examenes.vault.dto.EmployeeDto;
 import com.examenes.vault.repository.model.EmployeeModel;
-
 import org.springframework.stereotype.Component;
 
 import java.text.ParseException;
@@ -25,8 +23,7 @@ public class EmployeeMapper {
                 employeeDto.getSalary(),
                 employeeDto.getCommissionPct(),
                 employeeDto.getManagerId(),
-                employeeDto.getDepartment()
-
+                DepartmentMapper.toDomain(employeeDto.getDepartmentDto())
         );
     }
 
@@ -45,7 +42,7 @@ public class EmployeeMapper {
         );
     }
 
-    public static Employee toDomain(EmployeeModel employeeModel) {
+    public static Employee toDomain(EmployeeModel employeeModel, boolean showFullInfo) {
         return new Employee(employeeModel.getId(),
                 employeeModel.getFirstName(),
                 employeeModel.getLastName(),
@@ -56,12 +53,11 @@ public class EmployeeMapper {
                 employeeModel.getSalary(),
                 employeeModel.getCommissionPct(),
                 employeeModel.getManagerId(),
-                DepartmentMapper.toDomain(employeeModel.getDepartment())
-
+                showFullInfo ? DepartmentMapper.toDomain(employeeModel.getDepartment()) : null
         );
     }
 
-    public static EmployeeDto toDto(Employee employee) {
+    public static EmployeeDto toDto(Employee employee, boolean showFullInfo) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         return new EmployeeDto(employee.getId(),
                 employee.getFirstName(),
@@ -73,8 +69,7 @@ public class EmployeeMapper {
                 employee.getSalary(),
                 employee.getCommissionPct(),
                 employee.getManagerId(),
-                employee.getDepartment()
-
+                showFullInfo ?DepartmentMapper.toDto(employee.getDepartment()) : null
         );
     }
 }

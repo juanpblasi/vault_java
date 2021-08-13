@@ -14,7 +14,7 @@ import java.util.Date;
 @Table(name = "employees")
 public class EmployeeModel {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Long id;
     @Column(name = "first_name")
@@ -33,9 +33,10 @@ public class EmployeeModel {
     private Long salary;
     @Column(name = "commission_pct")
     private Long commissionPct;
+
     @Column(name = "manager_id")
     private Long managerId;
-    @ManyToOne(targetEntity = DepartmentModel.class )
+    @ManyToOne(targetEntity = DepartmentModel.class,cascade = CascadeType.ALL)
     @JoinColumn(name="department_id", nullable=false, updatable=false)
     private DepartmentModel department;
 

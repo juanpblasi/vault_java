@@ -14,13 +14,16 @@ import java.util.List;
 @Table(name = "departments")
 public class DepartmentModel {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="department_id")
     Long departmentId;
     @Column(name="department_name")
     String departmentName;
     @Column(name="manager_id")
-     Long managerId;
+    Long managerId;
+    @ManyToOne(targetEntity = LocationModel.class,cascade = CascadeType.ALL)
+    @JoinColumn(name="location_id", nullable=false, updatable=false)
+    LocationModel location;
     @OneToMany()
     List<EmployeeModel> employees;
 

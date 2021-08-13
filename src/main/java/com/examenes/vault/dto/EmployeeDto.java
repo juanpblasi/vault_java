@@ -24,5 +24,5 @@ public class EmployeeDto {
     private Long commissionPct;
     private Long managerId;
     @NotNull
-    private Department department;
+    private DepartmentDto departmentDto;
 }

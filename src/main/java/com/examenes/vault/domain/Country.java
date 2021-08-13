@@ -3,12 +3,12 @@ package com.examenes.vault.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+
 @Data
 @AllArgsConstructor
-public class Department {
-    Long departmentId;
-    String departmentName;
-    Long managerId;
-    Location location;
+public class Country {
+    Long countryId;
+    String countryName;
+    Region region;
 
 }
