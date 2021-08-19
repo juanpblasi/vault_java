@@ -17,13 +17,13 @@ public class CountryMapper {
                 RegionMapper.toDomain(countryDto.getRegion()));
     }
 
-    public static Country toDomain(CountryModel countryModel){
+    public static Country toDomain(CountryModel countryModel) {
         return new Country(countryModel.getCountryId(),
                 countryModel.getCountryName(),
                 RegionMapper.toDomain(countryModel.getRegion()));
     }
 
-    public static CountryDto toDto(Country country){
+    public static CountryDto toDto(Country country) {
         return new CountryDto(country.getCountryId(),
                 country.getCountryName(),
                 RegionMapper.toDto(country.getRegion()));
