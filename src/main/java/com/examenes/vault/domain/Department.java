@@ -6,9 +6,9 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class Department {
-    Long departmentId;
-    String departmentName;
-    Long managerId;
-    Location location;
+    private Long departmentId;
+    private String departmentName;
+    private Long managerId;
+    private Location location;
 
 }

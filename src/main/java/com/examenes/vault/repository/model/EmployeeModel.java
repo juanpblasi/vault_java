@@ -27,13 +27,13 @@ public class EmployeeModel {
     private String phoneNumber;
     @Column(name = "hire_date")
     private Date hireDate;
-    @Column(name = "job_id")
-    private String jobId;
+    @OneToOne(targetEntity = JobModel.class,cascade= CascadeType.ALL)
+    @JoinColumn(name="job_id", nullable=false, updatable=false)
+    private JobModel job;
     @Column(name = "salary")
     private Long salary;
     @Column(name = "commission_pct")
     private Long commissionPct;
-
     @Column(name = "manager_id")
     private Long managerId;
     @ManyToOne(targetEntity = DepartmentModel.class,cascade = CascadeType.ALL)

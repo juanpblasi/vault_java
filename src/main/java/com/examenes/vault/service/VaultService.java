@@ -1,11 +1,13 @@
 package com.examenes.vault.service;
 
 import com.examenes.vault.domain.Employee;
+import com.examenes.vault.domain.Job;
 import com.examenes.vault.exception.RequestException;
 import com.examenes.vault.mapper.DepartmentMapper;
 import com.examenes.vault.mapper.EmployeeMapper;
 import com.examenes.vault.repository.EmployeeRepository;
 import com.examenes.vault.repository.model.EmployeeModel;
+import com.examenes.vault.repository.model.JobModel;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,8 +26,10 @@ public class VaultService {
 
     public Employee create(Employee employee) {
         EmployeeModel employeeModel = EmployeeMapper.toModel(employee);
+
+        //
         EmployeeModel insertedEmployee = employeeRepository.save(employeeModel);
-        return EmployeeMapper.toDomain(insertedEmployee,false);
+        return EmployeeMapper.toDomain(insertedEmployee, false);
     }
 
     public Employee get(Long id) {
@@ -37,9 +42,22 @@ public class VaultService {
         }
     }
 
-    public List<Employee> findEmployees() {
-        return employeeRepository.findAll()
-                .stream().map((employeeModel -> EmployeeMapper.toDomain(employeeModel,true))) // map((EmployeeMapper::toDomain)) esta forma se puede utilizar con un solo parametro
+    public Employee getOptional(Long id) {
+        Optional<EmployeeModel> employeeModel = employeeRepository.findById(id);
+        if (employeeModel.isPresent()) {
+            return EmployeeMapper.toDomain(employeeModel.get(), false);
+        }
+        throw new RequestException("Employee not found", "not.found", HttpStatus.NOT_FOUND.value());
+    }
+
+    public List<Employee> findEmployees(Long jobId) {
+        if(jobId==null){
+            return employeeRepository.findAll()
+                    .stream().map((employeeModel -> EmployeeMapper.toDomain(employeeModel, true))) // map((EmployeeMapper::toDomain)) esta forma se puede utilizar con un solo parametro
+                    .collect(Collectors.toList());
+        }
+        return employeeRepository.findAllByJob(new JobModel(jobId, null, null, null))
+                .stream().map((employeeModel -> EmployeeMapper.toDomain(employeeModel, true))) // map((EmployeeMapper::toDomain)) esta forma se puede utilizar con un solo parametro
                 .collect(Collectors.toList());
     }
 
@@ -56,7 +74,7 @@ public class VaultService {
         EmployeeModel employeeModel;
         try {
             employeeModel = employeeRepository.getById(id);
-            updateFields(employee,employeeModel);
+            updateFields(employee, employeeModel);
             return EmployeeMapper.toDomain(employeeRepository.save(employeeModel), false);
         } catch (EntityNotFoundException e) {
             throw new RequestException("Employee not found", "not.found", HttpStatus.NOT_FOUND.value());

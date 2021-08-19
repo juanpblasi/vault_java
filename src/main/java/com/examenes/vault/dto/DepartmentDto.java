@@ -6,8 +6,8 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class DepartmentDto {
-    Long departmentId;
-    String departmentName;
-    Long managerId;
-    LocationDto locationDto;
+    private Long departmentId;
+    private String departmentName;
+    private Long managerId;
+    private LocationDto locationDto;
 }

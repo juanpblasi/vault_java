@@ -19,7 +19,7 @@ public class EmployeeMapper {
                 employeeDto.getEmail(),
                 employeeDto.getPhoneNumber(),
                 sdf.parse(employeeDto.getHireDate()),
-                employeeDto.getJobId(),
+                JobMapper.toDomain(employeeDto.getJobDto()),
                 employeeDto.getSalary(),
                 employeeDto.getCommissionPct(),
                 employeeDto.getManagerId(),
@@ -34,7 +34,7 @@ public class EmployeeMapper {
                 employee.getEmail(),
                 employee.getPhoneNumber(),
                 employee.getHireDate(),
-                employee.getJobId(),
+                JobMapper.toModel(employee.getJob()),
                 employee.getSalary(),
                 employee.getCommissionPct(),
                 employee.getManagerId(),
@@ -49,7 +49,7 @@ public class EmployeeMapper {
                 employeeModel.getEmail(),
                 employeeModel.getPhoneNumber(),
                 employeeModel.getHireDate(),
-                employeeModel.getJobId(),
+                JobMapper.toDomain(employeeModel.getJob()),
                 employeeModel.getSalary(),
                 employeeModel.getCommissionPct(),
                 employeeModel.getManagerId(),
@@ -65,11 +65,11 @@ public class EmployeeMapper {
                 employee.getEmail(),
                 employee.getPhoneNumber(),
                 sdf.format(employee.getHireDate()),
-                employee.getJobId(),
+                showFullInfo ? JobMapper.toDto(employee.getJob()) : null,
                 employee.getSalary(),
                 employee.getCommissionPct(),
                 employee.getManagerId(),
-                showFullInfo ?DepartmentMapper.toDto(employee.getDepartment()) : null
+                showFullInfo ? DepartmentMapper.toDto(employee.getDepartment()) : null
         );
     }
 }

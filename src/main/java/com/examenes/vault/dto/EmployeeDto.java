@@ -19,7 +19,8 @@ public class EmployeeDto {
     private String phoneNumber;
     @NotNull
     private String hireDate;
-    private String jobId;
+    @NotNull
+    private JobDto jobDto;
     private Long salary;
     private Long commissionPct;
     private Long managerId;

@@ -7,8 +7,8 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class Country {
-    Long countryId;
-    String countryName;
-    Region region;
+    private Long countryId;
+    private String countryName;
+    private Region region;
 
 }

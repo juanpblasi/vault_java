@@ -3,10 +3,10 @@ package com.examenes.vault.controller;
 import com.examenes.vault.domain.Employee;
 import com.examenes.vault.dto.EmployeeDto;
 import com.examenes.vault.mapper.EmployeeMapper;
-import com.examenes.vault.repository.model.EmployeeModel;
 import com.examenes.vault.service.VaultService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
@@ -37,8 +37,8 @@ public class VaultController {
     //
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<EmployeeDto> findEmployees() { // get es uno solo y muchos se usa find
-        return vaultService.findEmployees()
+    public List<EmployeeDto> findEmployees(@Nullable @RequestParam Long jobId) { // get es uno solo y muchos se usa find
+        return vaultService.findEmployees(jobId)
                 .stream().map((employee -> EmployeeMapper.toDto(employee, true)))
                 .collect(Collectors.toList());
     }

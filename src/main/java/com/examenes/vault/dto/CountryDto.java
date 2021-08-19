@@ -6,8 +6,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class CountryDto {
-    Long countryId;
-    String countryName;
-    RegionDto region;
-
+    private Long countryId;
+    private String countryName;
+    private RegionDto region;
 }
