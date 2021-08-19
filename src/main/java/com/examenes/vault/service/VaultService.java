@@ -1,7 +1,6 @@
 package com.examenes.vault.service;
 
 import com.examenes.vault.domain.Employee;
-import com.examenes.vault.domain.Job;
 import com.examenes.vault.exception.RequestException;
 import com.examenes.vault.mapper.DepartmentMapper;
 import com.examenes.vault.mapper.EmployeeMapper;
@@ -14,6 +13,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.Instant;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -27,7 +29,17 @@ public class VaultService {
     public Employee create(Employee employee) {
         EmployeeModel employeeModel = EmployeeMapper.toModel(employee);
 
-        //
+        List<EmployeeModel> listEmp = employeeRepository.findAll()
+                .stream().filter(emp -> emp.getDepartment().getDepartmentId() == employeeModel.getDepartment().getDepartmentId()).collect(Collectors.toList());
+        Long sumSalary = 0L;
+        for (EmployeeModel e : listEmp) {
+            sumSalary += e.getSalary();
+        }
+        Long avgSalary = sumSalary / listEmp.size();
+        Date today = Date.from(Instant.now());
+        if ((Calendar.DAY_OF_MONTH < 14 && avgSalary > 1000) || (Calendar.DAY_OF_MONTH > 14 && avgSalary > 1500)) {
+            throw new RequestException("Denied", "denied", HttpStatus.CONFLICT.value());
+        }
         EmployeeModel insertedEmployee = employeeRepository.save(employeeModel);
         return EmployeeMapper.toDomain(insertedEmployee, false);
     }
@@ -51,7 +63,7 @@ public class VaultService {
     }
 
     public List<Employee> findEmployees(Long jobId) {
-        if(jobId==null){
+        if (jobId == null) {
             return employeeRepository.findAll()
                     .stream().map((employeeModel -> EmployeeMapper.toDomain(employeeModel, true))) // map((EmployeeMapper::toDomain)) esta forma se puede utilizar con un solo parametro
                     .collect(Collectors.toList());

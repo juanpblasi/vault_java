@@ -28,6 +28,7 @@ public class LocationMapper {
                 CountryMapper.toDto(location.getCountry())
         );
     }
+
     public static Location toDomain(LocationModel locationModel) {
         return new Location(locationModel.getLocationId(),
                 locationModel.getStreetAddress(),
@@ -38,7 +39,7 @@ public class LocationMapper {
         );
     }
 
-    public static LocationModel toModel(Location location){
+    public static LocationModel toModel(Location location) {
         return new LocationModel(
                 location.getLocationId(),
                 location.getStreetAddress(),

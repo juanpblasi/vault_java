@@ -12,16 +12,16 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="country")
+@Table(name = "country")
 public class CountryModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="country_id")
+    @Column(name = "country_id")
     Long countryId;
-    @Column(name="country_name")
+    @Column(name = "country_name")
     String countryName;
-    @ManyToOne(targetEntity = RegionModel.class,cascade = CascadeType.ALL)
-    @JoinColumn(name="regionFK",referencedColumnName = "region_id",nullable = false,updatable = false)
+    @ManyToOne(targetEntity = RegionModel.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "regionFK", referencedColumnName = "region_id", nullable = false, updatable = false)
     RegionModel region;
     @OneToMany
     List<LocationModel> location;

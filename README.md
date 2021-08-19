@@ -22,12 +22,11 @@
 - Construir un Endpoint que permita insertar entidades de tipo Departments
   o Enviar en los datos del Department el dato LocationId.
   o Agregar una validación que determine el promedio de salario de todos los
-  empleados pertenecientes a todos los Department cuyo LocationId sea el
-  mismo del objeto que se esta intentando insertar.
+  empleados pertenecientes al Departmentid que estas queriendo insertar.
   § Si dicho promedio es mayor a 1000 y la fecha actual determina
   que nos encontramos del 1 al 14 (primeras 2 semanas del mes), en
-  ese caso denega la inserción del Department. Si es menor a 1000
-  la permite
+  ese caso denega la inserción del Employee. Si es menor a 1000
+  la permite.
   § En caso de que nos encontremos después de las 2 primeras
   semanas del mes (del 15 en adelante) entonces si el promedio es
   mayor a 1500 denega la inserción, caso contrario la permite.

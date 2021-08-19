@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<EmployeeModel, Long> {
-    List<EmployeeModel> findAllByJob (JobModel job);
+    List<EmployeeModel> findAllByJob(JobModel job);
 }
 
 

@@ -14,7 +14,7 @@ public class JobMapper {
         return new JobDto(job.getJobId(), job.getJobTitle(), job.getMinSalary(), job.getMaxSalary());
     }
 
-    public static JobModel toModel(Job job){
+    public static JobModel toModel(Job job) {
         return new JobModel(job.getJobId(), job.getJobTitle(), job.getMinSalary(), job.getMaxSalary());
     }
 
